@@ -1,10 +1,60 @@
 <!DOCTYPE html>
-<html lang = "en">
-  <head>
-    <title>My Site!</title>
-  </head>
-  <body>
-    <h1>omph, hello po baby Bea <3</h1>
-    I Love You <3
-  </body>
+<html lang="en">
+    <head>
+        <script src="https://unpkg.com/react@17/umd/react.production.min.js"></script>
+        <script src="https://unpkg.com/react-dom@17/umd/react-dom.production.min.js"></script>
+        <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+        <title>Addition</title>
+    </head>
+    <body>
+        <div id="app">
+        </div>
+
+        <script type="text/babel">
+            function App() {
+                const [state, setState] = React.useState({
+                    num1: Math.ceil(Math.random() * 10),
+                    num2: Math.ceil(Math.random() * 10),
+                    response: "",
+                    score: 0,
+                });
+
+                function inputText(event) {
+                    setState({
+                        ...state,
+                        response: event.target.value,
+                    })
+                }
+
+                function keyPressed(event) {
+                    if (event.key === "Enter") {
+                        if (state.num1 + state.num2 === parseInt(state.response)) {
+                            setState({
+                                ...state,
+                                num1: Math.ceil(Math.random() * 10),
+                                num2: Math.ceil(Math.random() * 10),
+                                response: "",
+                                score: state.score + 1,
+                            });
+                        } else {
+                            setState({
+                                ...state,
+                                response: "",
+                            });
+                        }
+                    }
+                }
+
+                return (
+                    <div>
+                        <div>{state.num1} + {state.num2}</div>
+                        <input autoFocus={true} onKeyPress={keyPressed} onChange={inputText} value={state.response}/>
+                        <div>Score: {state.score}</div>
+                    </div>
+                );
+            }
+
+            ReactDOM.render(<App/>, document.querySelector('#app'))
+        </script>
+    </body>
 </html>
