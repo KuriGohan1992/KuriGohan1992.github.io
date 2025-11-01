@@ -4,6 +4,26 @@
         <script src="https://unpkg.com/react@17/umd/react.production.min.js"></script>
         <script src="https://unpkg.com/react-dom@17/umd/react-dom.production.min.js"></script>
         <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+        <style>
+            #app {
+                text-align: center;
+                font-family: sans-serif;
+            }
+
+            #problem {
+                font-size: 72px;
+            }
+
+            .incorrect {
+                color: red;
+            }
+
+            #winner {
+                font-size: 72px;
+                color: green;
+            }
+
+        </style>
         <title>Addition</title>
     </head>
     <body>
@@ -17,6 +37,7 @@
                     num2: Math.ceil(Math.random() * 10),
                     response: "",
                     score: 0,
+                    incorrect: false,
                 });
 
                 function inputText(event) {
@@ -35,19 +56,29 @@
                                 num2: Math.ceil(Math.random() * 10),
                                 response: "",
                                 score: state.score + 1,
+                                incorrect: false,
                             });
                         } else {
                             setState({
                                 ...state,
                                 response: "",
+                                incorrect: true,
                             });
                         }
                     }
                 }
 
+                if (state.score === 10) {
+                    return (
+                        <div id="winner">
+                            You won, I love you po baby Bea!
+                        </div>
+                    );
+                }
+
                 return (
                     <div>
-                        <div>{state.num1} + {state.num2}</div>
+                        <div className={state.incorrect ? "incorrect" : ""} id="problem">{state.num1} + {state.num2}</div>
                         <input autoFocus={true} onKeyPress={keyPressed} onChange={inputText} value={state.response}/>
                         <div>Score: {state.score}</div>
                     </div>
